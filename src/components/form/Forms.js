@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, Button } from 'react-native'
+import { Text, View, StyleSheet, TextInput, Button, ScrollView } from 'react-native'
+import { MaskedTextInput } from 'react-native-mask-text'
 
 function Forms(props) {
 
@@ -9,60 +10,63 @@ function Forms(props) {
         console.warn(form)
     }
 
-    const [nome, setNome] = useState('')
-    const [email, setEmail] = useState('')
-    const [cpf, setCpf] = useState('')
-    const [telefone, setTelefone] = useState('')
-    const [dataNasc, setDataNasc] = useState('')
+    const [usuario, setUsuario] = useState({
+        nome: '',
+        email: '',
+        cpf: '',
+        telefone: '',
+        dataNasc: ''
+    })
+
+const cadastrar = () => {
+    console.log(usuario);
+}
 
     return (
-        <View style={[styles.Container]}>
-            
-            <Text>Nome Completo</Text>
-            <TextInput style={[styles.Input]} 
-                placeholder="Digite seu nome"
-                value={nome}
-                onChangeText={nome => {
-                    setNome(nome)
-                }}/>
+        <ScrollView style={[styles.Container]}>
+            <View style={[styles.WrapperInput]}>
+                <Text style={[styles.Label]}>Nome Completo</Text>
+                <TextInput style={[styles.Input]} 
+                    placeholder="Digite seu nome"
+                    value={usuario.nome}
+                    onChangeText={(value) => setUsuario({...usuario, nome: value})}/>
+            </View>
 
-            <Text>E-mail</Text>
-            <TextInput style={[styles.Input]} 
-                placeholder="Digite seu e-mail"
-                value={email}
-                onChangeText={email => {
-                    setEmail(email)
-                }}/>
+            <View style={[styles.WrapperInput]}>
+                <Text style={[styles.Label]}>E-mail</Text>
+                <TextInput style={[styles.Input]}
+                    placeholder="Digite seu e-mail"
+                    value={usuario.email}
+                    onChangeText={(value) => setUsuario({ ...usuario, email: value })} />
+            </View>
 
-            <Text>CPF</Text>
-            <TextInput style={[styles.Input]} 
-                placeholder="Digite seu CPF"
-                value={cpf}
-                onChangeText={cpf => {
-                    setCpf(cpf)
-                }}/>
+            <View style={[styles.WrapperInput]}>
+                <Text style={[styles.Label]}>CPF</Text>
+                <MaskedTextInput style={[styles.Input]}
+                mask="999.999.999-99"
+                    placeholder="Digite seu CPF"
+                    value={usuario.cpf}
+                    onChangeText={(value) => setUsuario({ ...usuario, cpf: value })} />
+            </View>
 
-            <Text>Telefone</Text>
-            <TextInput style={[styles.Input]} 
-                placeholder="Digite seu Telefone"
-                value={telefone}
-                onChangeText={telefone => {
-                    setTelefone(telefone)
-                }}/>
+            <View style={[styles.WrapperInput]}>
+                <Text style={[styles.Label]}>Telefone</Text>
+                <TextInput style={[styles.Input]}
+                    placeholder="Digite seu Telefone"
+                    value={usuario.telefone}
+                    onChangeText={(value) => setUsuario({ ...usuario, telefone: value })} />
+            </View>
 
-            <Text>Data de Nascimento</Text>
-            <TextInput style={[styles.Input]} 
-                placeholder="Digite sua data de nascimento"
-                value={dataNasc}
-                onChangeText={dataNasc => {
-                    setDataNasc(dataNasc)
-                }}/>
+            <View style={[styles.WrapperInput]}>
+                <Text style={[styles.Label]}>Data de Nascimento</Text>
+                <TextInput style={[styles.Input]}
+                    placeholder="Digite sua data de nascimento"
+                    value={usuario.dataNasc}
+                    onChangeText={(value) => setUsuario({ ...usuario, dataNasc: value })} />
+            </View>
 
-            <TouchableOpacity style={styles.Button} onPress={() => handleForm()}>
-                <Text style={styles.Text}>Cadastrar</Text>
-            </TouchableOpacity>
-
-        </View>
+            <Button title='Cadastrar' onPress={cadastrar} />
+        </ScrollView>
 
     )
 }
@@ -71,17 +75,17 @@ const styles = StyleSheet.create({
     Container: {
         backgroundColor: '#fff'
     },
-    Input: {
-        borderWidth: 1,
-        borderColor: "#000",
+    WrapperInput : {
+        marginBottom: 20
     },
-    Button: {
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 50,
-        borderRadius: 10,
-        backgroundColor: 'lightblue',
+    Input: {
+        borderWidth: 2,
+        borderColor: "#000",
+        paddingLeft: 10
+    },
+    Label: {
+        fontWeight: 'bold',
+        paddingLeft: 5
     }
 })
 
